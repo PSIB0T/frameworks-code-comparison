@@ -236,29 +236,26 @@ Templates in React are writtien inside the JavaScript file using the [JSX langua
 
 ### Angular
 
-#### Parent Component
 ```js
 @Component({
-  selector: 'parent',
+  selector: 'settings',
   template: `
-    <child
+    <user-preview
       [user]="user"
       (onEdit)="editedUser($event)"
     >
 
-    </child>
+    </user-preview>
   `
 })
 
-export class ParentComponent {
+export class Settings {
   user: User;
   constructor() {
-
     this.user = {
       name: 'Foo Bar',
       email: 'foobar@example.com'
     }
-
   }
 
   editedUser(user: User){
@@ -268,30 +265,22 @@ export class ParentComponent {
 
 ```
 
-#### Child Component
-
 ```js
 @Component({
-  selector: 'child',
+  selector: 'user-preview',
   template: `
     <p>
       <input type="text" value="{{user.name}}">
-    </p>
-    <p>
+    </p>    
       <input type="text" value="{{user.email}}">
-    </p>
-
+    
     <button (click)="emitEditedUser()">
   `
 })
 
-export class ChildComponent {
+export class UserPreview {
   @Input() user: User;
-  @Output() onEdit: EventEmitter<User>;
-
-  constructor () {
-    this.onEdit = new EventEmitter();
-  }
+  @Output() onEdit: EventEmitter = new EventEmitter<User>();
 
   emitEditedUser() {
     this.onEdit.emit(this.user);
