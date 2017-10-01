@@ -234,7 +234,71 @@ Templates in React are writtien inside the JavaScript file using the [JSX langua
 
 # Inputs and Outputs
 
-> TODO
+### Angular
+
+#### Parent Component
+```js
+@Component({
+  selector: 'parent',
+  template: `
+    <child
+      [user]="user"
+      (onEdit)="editedUser($event)"
+    >
+
+    </child>
+  `
+})
+
+export class ParentComponent {
+  user: User;
+  constructor() {
+
+    this.user = {
+      name: 'Foo Bar',
+      email: 'foobar@example.com'
+    }
+
+  }
+
+  editedUser(user: User){
+    console.log('Name of the edited user is', user.name);
+  }
+}
+
+```
+
+#### Child Component
+
+```js
+@Component({
+  selector: 'child',
+  template: `
+    <p>
+      <input type="text" value="{{user.name}}">
+    </p>
+    <p>
+      <input type="text" value="{{user.email}}">
+    </p>
+
+    <button (click)="emitEditedUser()">
+  `
+})
+
+export class ChildComponent {
+  @Input() user: User;
+  @Output() onEdit: EventEmitter<User>;
+
+  constructor () {
+    this.onEdit = new EventEmitter();
+  }
+
+  emitEditedUser() {
+    this.onEdit.emit(this.user);
+  }
+}
+
+```
 
 # Forms
 
